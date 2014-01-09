@@ -1,5 +1,8 @@
 <?php
 
+include_once("generalclasses.php");
+include_once("competitionclass.php");
+
 //Competition Class
 class Problem implements iObject, JsonSerializable{
 
@@ -15,15 +18,15 @@ class Problem implements iObject, JsonSerializable{
 
 //Static Member Functions
   public static function init(){
-    self::$tables = array("Problem");
+    self::$tables = array("problems");
     self::$primaryFieldList = array("idp");
     self::$tablesFieldList = array
     (
       "idp",
       "name",
-      "roomId",
-      "roomName",
-      "level"
+      "room_id",
+      "room_name",
+      "difficulty_level"
     );
   }
 
@@ -43,9 +46,9 @@ class Problem implements iObject, JsonSerializable{
 //Private Attributes
   private $idp;
   private $name;
-  private $roomId;
-  private $roomName;
-  private $level;
+  private $room_id;
+  private $room_name;
+  private $difficulty_level;
   
 
 //Functions
@@ -62,15 +65,15 @@ class Problem implements iObject, JsonSerializable{
   }
 
   public function getRoomId(){
-    return $this -> roomId;
+    return $this -> room_id;
   }
 
   public function getRoomName(){
-    return $this -> roomName;
+    return $this -> room_name;
   }
 
   public function getLevel(){
-    return $this -> level;
+    return $this -> difficulty_level;
   }
 
   //Setters
@@ -82,16 +85,16 @@ class Problem implements iObject, JsonSerializable{
     $this -> name = $name;
   }
 
-  public function setRoomId($roomId){
-    $this -> roomId = $roomId;
+  public function setRoomId($room_id){
+    $this -> room_id = $room_id;
   }
 
-  public function setRoomName($roomName){
-    $this -> roomName = $roomName;
+  public function setRoomName($room_name){
+    $this -> room_name = $room_name;
   }
 
-  public function setLevel($level){
-    $this -> level = $level;
+  public function setLevel($difficulty_level){
+    $this -> difficulty_level = $difficulty_level;
   }
 
   public function setFromSubset(array $details){
@@ -131,9 +134,9 @@ class Problem implements iObject, JsonSerializable{
     $query = Database::formInsertQuery(self::$tables[0] ,self::$tablesFieldList, array(
                     $this -> idp,
                     $this -> name,
-                    $this -> roomId,
-                    $this -> roomName,
-                    $this -> level
+                    $this -> room_id,
+                    $this -> room_name,
+                    $this -> difficulty_level
              ));
     $result =  $database -> executeQuery($query);
   }

@@ -1,5 +1,8 @@
 <?php
 
+  include_once("generalclasses.php");
+  include_once("problemclass.php");
+
 //Competition Class
 class Competition implements iObject, JsonSerializable{
 
@@ -13,25 +16,22 @@ class Competition implements iObject, JsonSerializable{
   private static $tablesFieldList;
   /** @const **/
   private static $competitionProblemsTables;
-  /** @const **/
-  private static $solvedProblemTables;
 
 //Static Member Functions
   public static function init(){
-    self::$tables = array("Competition");
-    self::$competitionProblemsTables = array("CompProb");
-    self::$solvedProblemTables = array("CompProbRegistrant");
+    self::$tables = array("competitions");
+    self::$competitionProblemsTables = array("competitions_problems");
     self::$primaryFieldList = array("idc");
     self::$tablesFieldList = array
     (
       "idc",
       "name",
-      "startTime",
-      "endTime",
+      "start_time",
+      "end_time",
       "description",
-      "resultEval"
+      "isevaluated"
     );
-  }  
+  }
 
   public static function getTablesName(){
     return self::$tables;
@@ -49,11 +49,11 @@ class Competition implements iObject, JsonSerializable{
 //Private Attributes
   private $idc;
   private $name;
-  private $startTime;
-  private $endTime;
+  private $start_time;
+  private $end_time;
   private $description;
   private $problems;
-  private $resultEval;
+  private $isevaluated;
 
 //Functions
   function __construct(){
@@ -69,11 +69,11 @@ class Competition implements iObject, JsonSerializable{
   }
 
   public function getStartTime(){
-    return $this -> startTime;
+    return $this -> start_time;
   }
 
   public function getEndTime(){
-    return $this -> endTime;
+    return $this -> end_time;
   }
 
   public function getDescription(){
@@ -85,7 +85,7 @@ class Competition implements iObject, JsonSerializable{
   }
 
   public function getResultEval(){
-    return $this -> resultEval;
+    return $this -> isevaluated;
   }
 
   //Setters
@@ -97,20 +97,20 @@ class Competition implements iObject, JsonSerializable{
     $this -> name = $name;
   }
 
-  public function setStartTime($startTime){
-    $this->startTime = $startTime;
+  public function setStartTime($start_time){
+    $this->start_time = $start_time;
   }
 
-  public function setEndTime($endTime){
-    $this->endTime = $endTime;
+  public function setEndTime($end_time){
+    $this->end_time = $end_time;
   }
 
   public function setDescription($description){
     $this -> description = $description;
   }
 
-  public function setResultEval($resultEval){
-    return $this -> resultEval = resultEval;
+  public function setResultEval($isevaluated){
+    return $this -> isevaluated = isevaluated;
   }
 
   public function setFromSubset(array $details){
@@ -149,8 +149,8 @@ class Competition implements iObject, JsonSerializable{
     //Problems
 
     //Form Query
-    $subQuery = Database::formSelectQuery($competitionProblemsTables, array(), self::$primaryFieldList, $primaryKeys)." AS T ";
-    $query = Database::formSelectQuery(array_merge(array($subQuery), Problem::getTables()), Problem::getTablesFieldList(), array(), array());
+    $subQuery = Database::formSelectQuery(self::$competitionProblemsTables, array(), self::$primaryFieldList, $primaryKeys)." AS T ";
+    $query = Database::formSelectQuery(array_merge(array($subQuery), Problem::getTablesName()), Problem::getTablesFieldList(), array(), array());
         
     //Get Result from database
     $result =  $database -> executeQuery($query);
@@ -175,16 +175,29 @@ class Competition implements iObject, JsonSerializable{
     $query = Database::formInsertQuery(self::$tables[0] ,self::$tablesFieldList, array(
                     $this -> idc,
                     $this -> name,
-                    $this -> startTime,
-                    $this -> endTime,
+                    $this -> start_time,
+                    $this -> end_time,
                     $this -> description,
-                    $this -> resultEval,
-             ));
+                    $this -> isevaluated,
+             ))." RETURNING ".self::$primaryFieldList[0];
     $result =  $database -> executeQuery($query);
     
     foreach ($this -> problems as $problem) {
       $problem -> insert($database);
     }
+  }
+
+  public function updateIsEvaluated(Database $database, $value){
+    //Form Query
+    $query = Database::formUpdateQuery(self::$tables[0], array(self::$tablesFieldList[5]), array($value),
+                                        self::$primaryFieldList,
+                                        array($this -> idc)
+                                      );
+    //Get Result from database
+    $result =  $database -> executeQuery($query);
+    $numberOfRows = pg_affected_rows($result); 
+    if ($numberOfRows < 1)
+      return 1;//die("No such submission");
   }
 
   public function update(Database $database){

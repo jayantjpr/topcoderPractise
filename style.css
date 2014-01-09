@@ -1,0 +1,227 @@
+iframe{
+    border:none;
+    overflow : scroll;
+}
+
+.center_form{
+ padding-left:  40% ;
+ padding-top: 20%;
+}
+
+
+#links{
+  text-align:center;  
+}
+
+#result_frame{
+    position:fixed;
+    width: 100%;
+    height: 95%;
+}
+
+#tabs {
+    text-align : right;
+}
+
+/**/
+
+.CSSTableGenerator {
+	margin:0;
+    padding:0;
+	width:100%;
+    box-shadow: 5px 5px 5px 0 #CCCCCC;
+	border:1px solid #000000;
+	
+	-moz-border-radius-bottomleft:13px;
+	-webkit-border-bottom-left-radius:13px;
+	border-bottom-left-radius:13px;
+	
+	-moz-border-radius-bottomright:13px;
+	-webkit-border-bottom-right-radius:13px;
+	border-bottom-right-radius:13px;
+	
+	-moz-border-radius-topright:13px;
+	-webkit-border-top-right-radius:13px;
+	border-top-right-radius:13px;
+	
+	-moz-border-radius-topleft:13px;
+	-webkit-border-top-left-radius:13px;
+	border-top-left-radius:13px;
+}
+.CSSTableGenerator table{
+	width:100%;
+	height:100%;
+	margin:0;padding:0;
+}
+.CSSTableGenerator tr:last-child td:last-child {
+	-moz-border-radius-bottomright:13px;
+	-webkit-border-bottom-right-radius:13px;
+	border-bottom-right-radius:13px;
+}
+.CSSTableGenerator table tr:first-child td:first-child {
+	-moz-border-radius-topleft:13px;
+	-webkit-border-top-left-radius:13px;
+	border-top-left-radius:13px;
+}
+.CSSTableGenerator table tr:first-child td:last-child {
+	-moz-border-radius-topright:13px;
+	-webkit-border-top-right-radius:13px;
+	border-top-right-radius:13px;
+}
+.CSSTableGenerator tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:13px;
+	-webkit-border-bottom-left-radius:13px;
+	border-bottom-left-radius:13px;
+	
+}
+.CSSTableGenerator tr:hover td{
+	
+}
+.CSSTableGenerator tr:nth-child(odd){ background-color:#C4EB7B; }
+.CSSTableGenerator tr:nth-child(even)    { background-color:#FFFFFF; }
+.CSSTableGenerator td{
+	vertical-align:middle;
+	
+	
+	border:1px solid #000000;
+	border-width:0 1px 1px 0;
+	text-align:left;
+	padding:7px;
+	font-size:14px;
+	font-family:Verdana;
+	font-weight:normal;
+	color: #0A0909;
+}
+.CSSTableGenerator tr:last-child td{
+	border-width:0 1px 0 0;
+}
+.CSSTableGenerator tr td:last-child{
+	border-width:0 0 1px 0;
+}
+.CSSTableGenerator tr:last-child td:last-child{
+	border-width:0 0 0 0;
+}
+.CSSTableGenerator tr:first-child td{
+		background:-o-linear-gradient(bottom, #16DE04 5%, #16BD00 100%);
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #16DE04), color-stop(1, #16BD00) );
+	background:-moz-linear-gradient( center top, #16DE04 5%, #16BD00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#16DE04", endColorstr="#16BD00");	
+   background: -o-linear-gradient(top,#16DE04,#16BD00);
+
+	background-color:#16DE04;
+	border:0 solid #000000;
+	text-align:center;
+	border-width:0 0 1px 1px;
+	font-size:18px;
+	font-family:Arial;
+	font-weight:bold;
+	color: #FFFFFF;
+}
+.CSSTableGenerator tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #16DE04 5%, #16BD00 100%);
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #16DE04), color-stop(1, #16BD00) );
+	background:-moz-linear-gradient( center top, #16DE04 5%, #16BD00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#16DE04", endColorstr="#16BD00");	
+   background: -o-linear-gradient(top,#16DE04,#16BD00);
+
+	background-color:#16DE04;
+}
+.CSSTableGenerator tr:first-child td:first-child{
+	border-width:0 0 1px 0;
+}
+.CSSTableGenerator tr:first-child td:last-child{
+	border-width:0 0 1px 1px;
+}
+
+
+/*Login form*/
+
+            #pass 
+            { 
+            background: #333; 
+            color: #ccc; 
+            width: 200px; 
+            padding: 6px 15px 6px 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 1px 0 #ccc inset; 
+            transition:500ms all ease; 
+            outline:0; 
+            } 
+            #text1:hover 
+            { 
+            width:270px; 
+            }
+            
+            #name 
+            { 
+            background: #333; 
+            color: #ccc; 
+            width: 200px; 
+            padding: 6px 15px 6px 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 1px 0 #ccc inset; 
+            transition:500ms all ease; 
+            outline:0; 
+            } 
+            #text1:hover 
+            { 
+            width:270px; 
+            } 
+            
+            #user_nm
+            { 
+            background: #333; 
+            color: #ccc; 
+            width: 200px; 
+            padding: 6px 15px 6px 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 1px 0 #ccc inset; 
+            transition:500ms all ease; 
+            outline:0; 
+            } 
+            #text1:hover 
+            { 
+            width:270px; 
+            } 
+            
+            #profile 
+            { 
+            background: #333; 
+            color: #ccc; 
+            width: 200px; 
+            padding: 6px 15px 6px 35px; 
+            border-radius: 20px; 
+            box-shadow: 0 1px 0 #ccc inset; 
+            transition:500ms all ease; 
+            outline:0; 
+            } 
+            #text1:hover 
+            { 
+            width:270px; 
+            }
+            
+/*Login and register form ended*/
+
+/*DashBoard*/
+
+#header {
+	background: #90a090;
+	border-bottom: double 1px #aba;
+	border-left: solid 1px #9a9;
+	border-right: solid 1px #565;
+	border-top: solid 1px #9a9;
+	font: italic normal 30% 'Times New Roman', Times, serif;
+	letter-spacing: 0.1em;
+	margin: 0;
+	padding: 1px 1px 1px 200px;
+}
+
+#site_name {
+	font: italic normal 600% 'Times New Roman', Times, serif;
+	letter-spacing: 0.1em;
+	margin: 0;
+	padding: 1px 1px 1px 180px;
+}
+
+
+/*End of DashBoard*/

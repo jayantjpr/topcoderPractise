@@ -13,7 +13,7 @@
     
     //Non-Static Member Functions
 
-    function __construct($host = "localhost", $dbname = "test", $user = "postgres"){
+    function __construct($host = "localhost", $dbname = "test2", $user = "postgres"){
       $this -> host = $host;
       $this -> dbname = $dbname;
       $this -> user = $user;
@@ -64,7 +64,7 @@
 
       if (!empty($whereFieldList)){
         for ($i=0; $i < $len - 1; $i++){
-          $query = $query."\"".$whereFieldList[$i]."\" = '".$whereValues[$i]."' AND \"";
+          $query = $query."\"".$whereFieldList[$i]."\" = '".$whereValues[$i]."' AND ";
         }
         $query = $query."\"".$whereFieldList[$len-1]."\" = '".$whereValues[$len-1]."' )";
       }
