@@ -4,6 +4,7 @@
   include_once("competitionclass.php");
   include_once("problemclass.php");
   include_once("registrantclass.php");
+  include_once("submissionclass.php");
 
   $auth = base64_encode('jayant:4Rjk47nx');
   $aContext = array(
@@ -17,16 +18,16 @@
 
   $database = new Database;
 
-  if (isset($_GET['comp'])){
+  //if (isset($_GET['comp'])){
 
     $competition = new Competition;
-    $competition -> read($database,array($_GET['comp']));
+    $competition -> read($database,array(1));//$_GET['comp']));
     
     $problems = $competition -> getProblems();
     foreach ($problems as $problem){
       //submissions for this problem
-      $registrants = Registrant::getSubmissionsFor($database, $competition -> getId(), $problem -> getId());
-
+      $registrants = Submission::getSubmissionsFor($database, $competition -> getId(), $problem -> getId());
+      
       //get topcoder details of the room
       $sFile = file_get_contents("http://www.topcoder.com/tc?module=BasicData&c=dd_algo_practice_room_detail&dsid=30&rd=".$problem -> getRoomId(), False, $cxContext);
       $xml = simplexml_load_string($sFile);
@@ -35,16 +36,18 @@
       foreach ($registrants as $registrant) {
         //search XML for the registrant for this problem
         foreach ($xml->row as $row)
-          if ($row -> coder_id == $registrant && $row -> problem_id == $problem -> getId()){
+          if ($row -> coder_id == $registrant -> getRegistrantId() && $row -> problem_id == $problem -> getId()){
             //get score
             $score = $row -> points;
             //update his score
-            Registrant::updateScore($database, $registrant, $competition -> getId(), $problem -> getId(), $score);
+            $registrant -> setScore($score);
+            $registrant -> updateScore($database);
             break;
           } 
       }
     }
-    $competition -> updateIsEvaluated($database, true);
-  }
+    $competition -> setIsEvaluated(true);
+    $competition -> updateIsEvaluated($database);
+  //}
   die();  
  ?>

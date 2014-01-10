@@ -83,7 +83,7 @@
         $query = "( SELECT \"".implode("\",\"", $displayFieldList)."\" FROM ".implode(" NATURAL JOIN ", $table)." WHERE ".$whereclause." )";
 
       return $query;
-    }  
+    }
     
     public static function formInsertQuery($table,array $insertFieldList = NULL, array $insertValues){
       

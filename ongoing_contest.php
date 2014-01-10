@@ -3,6 +3,7 @@
     include_once("competitionclass.php");
     include_once("problemclass.php");
     include_once("registrantclass.php");
+    include_once("submissionclass.php");
 
     $database = new Database;
 
@@ -10,6 +11,9 @@
             $competition = new Competition;
             $competition -> read($database,array(1));//$_GET['comp']));
             $problems = $competition->getProblems();
+    //}
+    //else{
+    //  die("The contest is not yet active");
     //}
 ?>
 <!DOCTYPE html>
@@ -38,9 +42,11 @@
         <h3> Problems </h3>
         
         <?php
-            foreach($problems as $problem)
-            {
-                echo '<a href="">'.$problem->getName()."</a>";
+            foreach($problems as $problem){
+                if ($competition -> getIsEvaluated() == 't')
+                    echo "<a href=\"http://community.topcoder.com/stat?c=problem_statement&pm=".$problem -> getId()."\" >";
+                echo $problem->getName();
+                if ($competition -> getIsEvaluated() == 't') echo "</a>";
                 echo "\t".$problem->getRoomName()." (Level : ".$problem->getLevel().")\t";
                 echo '<input type="button" value="I pass system test">';
                 echo "<br>";
@@ -50,25 +56,33 @@
         
 </div>
 <br>
-<h3>Leader Board</h3>
-<div id="leader_board "class="CSSTableGenerator" >
-    <table  cellspacing="0">
-        <tr>
-            <td> Rank </td>
-            <td> Top Coder Handle </td>
-            <td> Score </td>
-        </tr>
-        <?php
-            /*
-            echo "<tr>
-                    <td>". Rank ."</td>
-                    <td>". Top Coder Handle ."</td>
-                    <td>". Score ."</td>
-                </tr>";
-            */
-        ?>
-    </table>
-</div>
-            
+<?php
+    if ($competition -> getIsEvaluated() == 't'){
+        echo '<h3>Leader Board</h3>
+                <div id="leader_board "class="CSSTableGenerator" >
+                    <table cellspacing="0">
+                        <tr>
+                            <td> Rank </td>
+                            <td> Name </td>
+                            <td> Score </td>
+                        </tr>';
+        
+                        $registrants = Submission::getLeadboardFor($database, $competition -> getId());
+                        $len = sizeof($registrants);
+                        for ($i=0; $i < $len; $i++){
+                            echo "<tr>;
+                                    <td>".($i+1)."</td>";
+                            echo "  <td><a href=\"http://community.topcoder.com/tc?module=MemberProfile&cr=".$registrants[$i] -> getRegistrant() -> getId()."\">".
+                                            $registrants[$i] -> getRegistrant() -> getName()." (".$registrants[$i] -> getRegistrant() -> getHandle().")
+                                        </a>
+                                    </td>";
+                            echo "  <td>".$registrants[$i] -> getScore()."</td>";
+                            echo "</tr>";
+                        }
+        echo '      </table>
+                </div>';
+
+    }
+?>
 </body>
 </html>

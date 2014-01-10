@@ -84,7 +84,7 @@ class Competition implements iObject, JsonSerializable{
     return $this -> problems;
   }
 
-  public function getResultEval(){
+  public function getIsEvaluated(){
     return $this -> isevaluated;
   }
 
@@ -109,8 +109,8 @@ class Competition implements iObject, JsonSerializable{
     $this -> description = $description;
   }
 
-  public function setResultEval($isevaluated){
-    return $this -> isevaluated = isevaluated;
+  public function setIsEvaluated($isevaluated){
+    return $this -> isevaluated = $isevaluated;
   }
 
   public function setFromSubset(array $details){
@@ -187,9 +187,9 @@ class Competition implements iObject, JsonSerializable{
     }
   }
 
-  public function updateIsEvaluated(Database $database, $value){
+  public function updateIsEvaluated(Database $database){
     //Form Query
-    $query = Database::formUpdateQuery(self::$tables[0], array(self::$tablesFieldList[5]), array($value),
+    $query = Database::formUpdateQuery(self::$tables[0], array(self::$tablesFieldList[5]), array($this -> isevaluated),
                                         self::$primaryFieldList,
                                         array($this -> idc)
                                       );

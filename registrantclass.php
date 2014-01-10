@@ -9,10 +9,6 @@ class Registrant implements iObject, JsonSerializable{
   /** @const **/
   private static $tables;
   /** @const **/
-  private static $submissionsTables;
-  /** @const **/
-  private static $submissionScoreField;
-  /** @const **/
   private static $primaryFieldList;
   /** @const **/
   private static $tablesFieldList;
@@ -21,8 +17,6 @@ class Registrant implements iObject, JsonSerializable{
 //Static Member Functions
   public static function init(){
     self::$tables = array("registrants");
-    self::$submissionsTables = array("submissions");
-    self::$submissionScoreField = array("score");
     self::$primaryFieldList = array("idr");
     self::$tablesFieldList = array
     (
@@ -136,42 +130,6 @@ class Registrant implements iObject, JsonSerializable{
     foreach ($this -> problems as $problem) {
       $problem -> insert($database);
     }
-  }
-
-  public static function getSubmissionsFor($database, $idc, $idp){
-    //Form Query
-    $query = Database::formSelectQuery(self::$submissionsTables, self::$primaryFieldList, 
-                                        array_merge(Competition::getPrimaryFieldList(), Problem::getPrimaryFieldList()),
-                                        array($idc, $idp)
-                                      );
-
-    //Get Result from database
-    $result =  $database -> executeQuery($query);
-    $numberOfRows = pg_num_rows($result); 
-    if ( $numberOfRows < 1)
-      return 1;//die("No Student with this Roll Number");
-  
-    //Fill the registrant array array
-    $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
-    $registrants[0] = $detailArray[self::$primaryFieldList[0]];
-    for ($i=1; $i < $numberOfRows; $i++) { 
-      $detailArray = pg_fetch_array($result, $i, PGSQL_ASSOC);
-      $registrants[$i] = $detailArray[self::$primaryFieldList[0]];
-    }
-    return $registrants;
-  }
-
-  public static function updateScore($database, $idr, $idc, $idp, $score){
-    //Form Query
-    $query = Database::formUpdateQuery(self::$submissionsTables[0], self::$submissionScoreField, array($score), 
-                                        array_merge(Competition::getPrimaryFieldList(), Problem::getPrimaryFieldList(), self::$primaryFieldList),
-                                        array($idc, $idp, $idr)
-                                      );
-    //Get Result from database
-    $result =  $database -> executeQuery($query);
-    $numberOfRows = pg_affected_rows($result); 
-    if ($numberOfRows < 1)
-      return 1;//die("No such submission");
   }
 
   public function update(Database $database){
