@@ -18,10 +18,12 @@
 
   $database = new Database;
 
-  //if (isset($_GET['comp'])){
+  var_dump($_SERVER['argv']);
+
+  if (isset($_SERVER['argv'][1])){
 
     $competition = new Competition;
-    $competition -> read($database,array(1));//$_GET['comp']));
+    $competition -> read($database,array($_SERVER['argv'][1]));
     
     $problems = $competition -> getProblems();
     foreach ($problems as $problem){
@@ -48,6 +50,7 @@
     }
     $competition -> setIsEvaluated(true);
     $competition -> updateIsEvaluated($database);
-  //}
+  
+  }
   die();  
  ?>

@@ -149,7 +149,6 @@ class Submission implements iObject, JsonSerializable{
     return $submissions;
   }
 
-
   public static function getLeadboardFor($database, $idc){
     //Form Query
     $sub_query = "(SELECT ".self::$tablesFieldList[2].", SUM(score) AS ".self::$tablesFieldList[3]." FROM ".self::$tables[0]." WHERE ".self::$tablesFieldList[0]." = ".$idc." GROUP BY ". self::$tablesFieldList[2].") AS T";
@@ -175,6 +174,7 @@ class Submission implements iObject, JsonSerializable{
     return $submissions;
   }
 
+
   
   //Insert Object into the Database
   public function insert(Database $database){
@@ -190,6 +190,8 @@ class Submission implements iObject, JsonSerializable{
       return 1;//die("Insert Unsuccessful");
   }
 
+
+  //Update Database
   public function updateScore($database){
     //Form Query
     $query = Database::formUpdateQuery(self::$tables[0], array(self::$tablesFieldList[3]), array($this -> score), 

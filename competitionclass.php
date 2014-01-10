@@ -169,6 +169,29 @@ class Competition implements iObject, JsonSerializable{
     }
   }
 
+  //Read Object from Database
+  public static function readAll(Database $database){
+    //Form Query
+    $query = Database::formSelectQuery(self::$tables, array(), array(), array())." ORDER BY ".self::$tablesFieldList[2]." DESC" ;
+    
+    //Get Result from database
+    $result =  $database -> executeQuery($query);
+    $numberOfRows = pg_num_rows($result); 
+    if ( $numberOfRows < 1)
+      return 1;//die("No Student with this Roll Number");
+  
+    //Fill the Objects with details
+    $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
+    $competitions[0] = new Competition;
+    $competitions[0] -> setFromSubset($detailArray);
+    for ($i=1; $i < $numberOfRows; $i++) { 
+      $detailArray = pg_fetch_array($result, $i, PGSQL_ASSOC);
+      $competitions[$i] = new Competition;
+      $competitions[$i] -> setFromSubset($detailArray);
+    }
+    return $competitions;
+  }  
+
   
   //Insert Object into the Database
   public function insert(Database $database){

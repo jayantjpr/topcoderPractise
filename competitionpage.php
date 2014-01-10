@@ -7,19 +7,19 @@
 
     $database = new Database;
 
-    //if (isset($_GET['comp'])){
+    if (isset($_GET['comp'])){
             $competition = new Competition;
-            $competition -> read($database,array(1));//$_GET['comp']));
+            $competition -> read($database, array($_GET['comp']));
             $problems = $competition->getProblems();
-    //}
-    //else{
-    //  die("The contest is not yet active");
-    //}
+    }
+    else{
+      die("The contest is not yet active");
+    }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title> On going Contest </title>
+    <title> Contests </title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body background="images.jpg">
@@ -70,7 +70,7 @@
                         $registrants = Submission::getLeadboardFor($database, $competition -> getId());
                         $len = sizeof($registrants);
                         for ($i=0; $i < $len; $i++){
-                            echo "<tr>;
+                            echo "<tr>
                                     <td>".($i+1)."</td>";
                             echo "  <td><a href=\"http://community.topcoder.com/tc?module=MemberProfile&cr=".$registrants[$i] -> getRegistrant() -> getId()."\">".
                                             $registrants[$i] -> getRegistrant() -> getName()." (".$registrants[$i] -> getRegistrant() -> getHandle().")
