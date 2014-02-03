@@ -212,13 +212,15 @@ class Competition implements iObject{
     $this -> idc = $row[self::$primaryFieldList[0]];
     $results[] = $result;
 
-    $result = pg_prepare($database -> getDB(), "problem_query", 'SELECT * FROM problems WHERE "'.Problem::getPrimaryFieldList()[0].'" = $1');
+    $idp = Problem::getPrimaryFieldList();
+    $idp = $idp[0];
+    $result = pg_prepare($database -> getDB(), "problem_query", 'SELECT * FROM problems WHERE "'.$id.'" = $1');
     foreach ($this -> problems as $problem) {
       $result = pg_execute($database -> getDB(), "problem_query", array($problem -> getId()));
       if(pg_num_rows($result) == 0){
         $results[] = $problem -> insert($database);
       }
-      $query = Database::formInsertQuery(self::$competitionProblemsTables[0], array(self::$primaryFieldList[0], Problem::getPrimaryFieldList()[0]),
+      $query = Database::formInsertQuery(self::$competitionProblemsTables[0], array(self::$primaryFieldList[0], $idp),
                                          array($this -> idc, $problem -> getId()));
       $result =  $database -> executeQuery($query);  
       $results[] = $result;

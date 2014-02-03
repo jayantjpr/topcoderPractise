@@ -120,7 +120,6 @@
 
         $(".passed").click(function(){
           var sub = this.name.split(',');
-          alert(sub);
           $.post(
                 loadUrl,
                 {idc: sub[0], idp: sub[1], idr: sub[2]},

@@ -12,6 +12,7 @@
         <ul class="breadcrumb">
             <li><a href="dashboard.php">Competeitions</a></li>
             <li><a href="rules.php">Rules</a></li>
+            <li><a href="logout.php">Log Out</a></li>
             <li></li>
         </ul>
     
