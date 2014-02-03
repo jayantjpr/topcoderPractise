@@ -4,7 +4,7 @@
   include_once("problemclass.php");
 
 //Competition Class
-class Competition implements iObject, JsonSerializable{
+class Competition implements iObject{
 
 
 //Static Attributes
@@ -57,6 +57,7 @@ class Competition implements iObject, JsonSerializable{
 
 //Functions
   function __construct(){
+    $this -> isevaluated = "FALSE";
   }
 
   //Getters
@@ -113,6 +114,10 @@ class Competition implements iObject, JsonSerializable{
     return $this -> isevaluated = $isevaluated;
   }
 
+  public function setProblems($problems){
+    return $this -> problems = $problems;
+  }
+
   public function setFromSubset(array $details){
     foreach ($details as $key => $value) {
       $this -> $key = $value;
@@ -139,7 +144,7 @@ class Competition implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_num_rows($result); 
     if ( $numberOfRows < 1)
-      return 1;//die("No Student with this Roll Number");
+      return -1;//die("No Student with this Roll Number");
   
     //Fill the Objects with details
     $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
@@ -156,7 +161,7 @@ class Competition implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_num_rows($result); 
     if ( $numberOfRows < 1)
-      return 1;//die("No Student with this Roll Number");
+      return -1;//die("No Student with this Roll Number");
   
     //Fill the problems array
     $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
@@ -178,7 +183,7 @@ class Competition implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_num_rows($result); 
     if ( $numberOfRows < 1)
-      return 1;//die("No Student with this Roll Number");
+      return -1;//die("No Student with this Roll Number");
   
     //Fill the Objects with details
     $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
@@ -195,8 +200,7 @@ class Competition implements iObject, JsonSerializable{
   
   //Insert Object into the Database
   public function insert(Database $database){
-    $query = Database::formInsertQuery(self::$tables[0] ,self::$tablesFieldList, array(
-                    $this -> idc,
+    $query = Database::formInsertQuery(self::$tables[0], array_slice(self::$tablesFieldList,1), array(
                     $this -> name,
                     $this -> start_time,
                     $this -> end_time,
@@ -204,10 +208,23 @@ class Competition implements iObject, JsonSerializable{
                     $this -> isevaluated,
              ))." RETURNING ".self::$primaryFieldList[0];
     $result =  $database -> executeQuery($query);
-    
+    $row = pg_fetch_array($result);
+    $this -> idc = $row[self::$primaryFieldList[0]];
+    $results[] = $result;
+
+    $result = pg_prepare($database -> getDB(), "problem_query", 'SELECT * FROM problems WHERE "'.Problem::getPrimaryFieldList()[0].'" = $1');
     foreach ($this -> problems as $problem) {
-      $problem -> insert($database);
+      $result = pg_execute($database -> getDB(), "problem_query", array($problem -> getId()));
+      if(pg_num_rows($result) == 0){
+        $results[] = $problem -> insert($database);
+      }
+      $query = Database::formInsertQuery(self::$competitionProblemsTables[0], array(self::$primaryFieldList[0], Problem::getPrimaryFieldList()[0]),
+                                         array($this -> idc, $problem -> getId()));
+      $result =  $database -> executeQuery($query);  
+      $results[] = $result;
     }
+    
+    return $results;
   }
 
   public function updateIsEvaluated(Database $database){
@@ -220,7 +237,7 @@ class Competition implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_affected_rows($result); 
     if ($numberOfRows < 1)
-      return 1;//die("No such submission");
+      return -1;//die("No such submission");
   }
 
   public function update(Database $database){

@@ -48,18 +48,18 @@ CREATE TABLE submissions(
 	idp INTEGER NOT NULL,
 	idr INTEGER NOT NULL,
 	score REAL NOT NULL DEFAULT 0,
-	submission_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	submission_time TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'IST'),
 	PRIMARY KEY(idc, idp, idr),
 	FOREIGN KEY (idc) REFERENCES competitions(idc) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idp) REFERENCES problems(idp) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idr) REFERENCES registrants(idr) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO registrants VALUES ('23101510', 'Jayant Gupta', 'jayantjpr', 'abc123');
-INSERT INTO registrants VALUES ('22700151', 'Chinese Guy', 'pladene', 'abc123');
+-- password : helloworld
+INSERT INTO registrants VALUES ('0', 'Admin', 'admin', 'fc5e038d38a57032085441e7fe7010b0');
+-- password : abc123
+INSERT INTO registrants VALUES ('22700151', 'Chinese Guy', 'pladene', 'e99a18c428cb38d5f260853678922e03');
 INSERT INTO competitions(name, start_time, end_time, description) VALUES  ('DP1', '2014-01-09 19:25:52.707311+05:30', '2014-01-09 20:25:52.707311+05:30', 'test');
 INSERT INTO problems VALUES ('12075', 'PillarsDivTwo', '15289', 'SRM 547 DIV 2', '2');
 INSERT INTO competitions_problems VALUES ('1','12075');
 INSERT INTO submissions VALUES ('1', '12075', '22700151');
-
-

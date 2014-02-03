@@ -6,7 +6,7 @@
   include_once("registrantclass.php");
   include_once("submissionclass.php");
 
-  $auth = base64_encode('jayant:4Rjk47nx');
+  $auth = base64_encode('proxy-username:proxy-password');
   $aContext = array(
     'http' => array(
         'proxy' => 'tcp://202.141.80.22:3128',
@@ -52,5 +52,5 @@
     $competition -> updateIsEvaluated($database);
   
   }
-  die();  
+  die(); 
  ?>

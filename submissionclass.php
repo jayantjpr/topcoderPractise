@@ -2,7 +2,7 @@
 
 
 //Submission Class
-class Submission implements iObject, JsonSerializable{
+class Submission implements iObject{
 
 //Static Attributes
   /** @const **/
@@ -50,6 +50,7 @@ class Submission implements iObject, JsonSerializable{
 //Functions
   function __construct(){
     $this -> registrant = new Registrant;
+    $this -> score = "0";
   }
 
   //Getters
@@ -119,7 +120,7 @@ class Submission implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_num_rows($result); 
     if ( $numberOfRows < 1)
-      return 1;//die("No Student with this Roll Number");
+      return -1;//die("No Student with this Roll Number");
   
     //Fill the Objects with details
     $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
@@ -135,7 +136,7 @@ class Submission implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_num_rows($result); 
     if ( $numberOfRows < 1)
-      return 1;//die("No Student with this Roll Number");
+      return -1;//die("No Student with this Roll Number");
   
     //Fill the registrant array
     $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
@@ -158,7 +159,7 @@ class Submission implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_num_rows($result); 
     if ( $numberOfRows < 1)
-      return 1;//die("No Student with this Roll Number");
+      return -1;//die("No Student with this Roll Number");
   
     //Fill the registrant array
     $detailArray = pg_fetch_array($result, 0, PGSQL_ASSOC);
@@ -187,7 +188,7 @@ class Submission implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_affected_rows($result); 
     if ($numberOfRows < 1)
-      return 1;//die("Insert Unsuccessful");
+      return -1;//die("Insert Unsuccessful");
   }
 
 
@@ -202,7 +203,7 @@ class Submission implements iObject, JsonSerializable{
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_affected_rows($result); 
     if ($numberOfRows < 1)
-      return 1;//die("Update Unsuccessful");
+      return -1;//die("Update Unsuccessful");
   }
 
   public function update(Database $database){

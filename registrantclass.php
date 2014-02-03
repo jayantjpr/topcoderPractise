@@ -2,7 +2,7 @@
 
 
 //Student Class
-class Registrant implements iObject, JsonSerializable{
+class Registrant implements iObject{
 
 
 //Static Attributes
@@ -120,16 +120,13 @@ class Registrant implements iObject, JsonSerializable{
   //Insert Object into the Database
   public function insert(Database $database){
     $query = Database::formInsertQuery(self::$tables[0] ,self::$tablesFieldList, array(
-                    $this -> idc,
+                    $this -> idr,
                     $this -> name,
                     $this -> handle,
-                    $this -> password,
+                    $this -> password
              ));
     $result =  $database -> executeQuery($query);
-    
-    foreach ($this -> problems as $problem) {
-      $problem -> insert($database);
-    }
+    return $result;
   }
 
   public function update(Database $database){

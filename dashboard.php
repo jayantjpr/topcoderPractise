@@ -1,4 +1,15 @@
 <?php
+
+    // This starts the session which is like a cookie, but it isn't saved on your hdd and is much more secure.
+    session_start();
+
+    // That bit of code checks if you are logged in or not, and if you are, you can't log in again!
+    if(!isset($_SESSION['idr'])){
+        echo "You are already logged in! Redirecting you to correct page ...";
+        header("Location: ./index.php");
+        die();
+    }
+
     include_once("generalclasses.php");
     include_once("competitionclass.php");
     include_once("problemclass.php");
@@ -6,6 +17,9 @@
     include_once("submissionclass.php");
 
     $database = new Database;
+    if (!$database){
+        die("Error in connection: " . pg_last_error());
+    }
 ?>
 
 <!DOCTYPE html>
@@ -15,16 +29,21 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body background="images.jpg">
-<div id="header">
-    <div id= "tabs">
-        <input type="button" value="Competition" onclick="location.href='dashboard.php'" >
-        <input type="button" value="Rules" onclick="location.href='rules.php'">
+    <div id="page-wrap">
+    
+        <h1>Practise website</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="dashboard.php">Competeitions</a></li>
+            <li><a href="rules.php">Rules</a></li>
+            <li><a href="logout.php">Log Out</a></li>
+            <li></li>
+        </ul>
+    
     </div>
 
-    <h1 id="site_name">Practice Website</h1>
-</div>
 
-<h3>Competitions</h3>
+<h2 style="text-align:center"> Competitions </h2>
 <div id="comp_list "class="CSSTableGenerator" >
     <table  cellspacing="0">
         <tr>

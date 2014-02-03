@@ -9,14 +9,16 @@
     private $dbname;
     private $user;
     private $dbh;
+    private $password;
 
     
     //Non-Static Member Functions
 
-    function __construct($host = "localhost", $dbname = "test2", $user = "postgres"){
+    function __construct($host = "localhost", $dbname = "test2", $user = "postgres", $password = "abc123"){
       $this -> host = $host;
       $this -> dbname = $dbname;
       $this -> user = $user;
+      $this -> password = $password;
       $this -> dbh = NULL;
 
       self::connect();
@@ -27,7 +29,7 @@
     }
 
     public function connect(){
-      $this -> dbh = pg_connect("host=".$this -> host." dbname=".$this -> dbname." user=".$this -> user);
+      $this -> dbh = pg_connect("host=".$this -> host." dbname=".$this -> dbname." user=".$this -> user." password=".$this -> password);
       if (!$this -> dbh)
         die("Error in connection: " . pg_last_error());
     }
@@ -37,6 +39,11 @@
         die("Error in disconnecting:  " . pg_last_error());
       pg_close($this -> dbh);
     }
+
+    public function getDB(){
+      return $this -> dbh;
+    }
+
 
     public function executeQuery($query){
       //Fire Query to Database

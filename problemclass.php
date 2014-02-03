@@ -4,7 +4,7 @@ include_once("generalclasses.php");
 include_once("competitionclass.php");
 
 //Competition Class
-class Problem implements iObject, JsonSerializable{
+class Problem implements iObject{
 
 
 //Static Attributes
