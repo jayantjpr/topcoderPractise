@@ -44,6 +44,7 @@ class Submission implements iObject{
   private $idp;
   private $idr;
   private $score;
+  private $count;
   private $registrant;  //object
 
 
@@ -51,6 +52,7 @@ class Submission implements iObject{
   function __construct(){
     $this -> registrant = new Registrant;
     $this -> score = "0";
+    $this -> count = "1";
   }
 
   //Getters
@@ -68,6 +70,10 @@ class Submission implements iObject{
 
   public function getScore(){
     return $this -> score;
+  }
+
+  public function getCount(){
+    return $this -> count;
   }
 
   public function getRegistrant(){
@@ -152,9 +158,11 @@ class Submission implements iObject{
 
   public static function getLeadboardFor($database, $idc){
     //Form Query
-    $sub_query = "(SELECT ".self::$tablesFieldList[2].", SUM(score) AS ".self::$tablesFieldList[3]." FROM ".self::$tables[0]." WHERE ".self::$tablesFieldList[0]." = ".$idc." GROUP BY ". self::$tablesFieldList[2].") AS T";
-    $query = Database::formSelectQuery(array_merge(array($sub_query), Registrant::getTablesName()), array(), array(), array())." ORDER BY ". self::$tablesFieldList[3];
-    
+    $sub_query = "(SELECT ".self::$tablesFieldList[2].", SUM(score) AS ".self::$tablesFieldList[3].", COUNT(*) AS count".
+      " FROM ".self::$tables[0]." WHERE ".self::$tablesFieldList[0]." = ".$idc." GROUP BY ". self::$tablesFieldList[2].") AS T";
+    $query = Database::formSelectQuery(array_merge(array($sub_query), Registrant::getTablesName()), array(), array(), array())." ORDER BY count, ". self::$tablesFieldList[3]." DESC";
+    //var_dump($query);
+
     //Get Result from database
     $result =  $database -> executeQuery($query);
     $numberOfRows = pg_num_rows($result); 

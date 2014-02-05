@@ -90,6 +90,7 @@
                             <tr>
                                 <td> Rank </td>
                                 <td> Name </td>
+                                <td> Number of Problems Solved </td>
                                 <td> Score </td>
                             </tr>';
             
@@ -102,6 +103,7 @@
                                                 $registrants[$i] -> getRegistrant() -> getName()." (".$registrants[$i] -> getRegistrant() -> getHandle().")
                                             </a>
                                         </td>";
+                                echo "  <td>".$registrants[$i] -> getCount()."</td>";
                                 echo "  <td>".$registrants[$i] -> getScore()."</td>";
                                 echo "</tr>";
                             }

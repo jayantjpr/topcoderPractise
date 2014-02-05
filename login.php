@@ -46,6 +46,13 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body background="images.jpg">
+	<div id="page-wrap">
+        <ul class="breadcrumb">
+            <li><a href="rules.php">Rules</a></li>
+            <li><a href="register.php">Register</a></li>
+           <li></li>
+		</ul>
+    </div>
 <form id="login_form" class="center_form" method="post" action="login.php">
 <table class="login_table" >
 	<tr>

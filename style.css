@@ -238,7 +238,7 @@ menu, nav, section { display: block; }
 
 h1 { font: normal 32px Helvetica, Arial, Sans-Serif; letter-spacing: -1px; margin: 0 0 15px 0; }
 
-.breadcrumb { 
+        .breadcrumb { 
             list-style: none; 
             overflow: hidden; 
             font: 18px Helvetica, Arial, Sans-Serif;
@@ -297,14 +297,14 @@ h1 { font: normal 32px Helvetica, Arial, Sans-Serif; letter-spacing: -1px; margi
         .breadcrumb li:nth-child(5) a       { background:        hsla(34,85%,75%,1); }
         .breadcrumb li:nth-child(5) a:after { border-left-color: hsla(34,85%,75%,1); }
         .breadcrumb li:last-child a {
-            background: white !important;
+            background: white;
             color: black;
             pointer-events: none;
             cursor: default;
         }
         .breadcrumb li:last-child a:after { border: 0; }
         .breadcrumb li a:hover { background: hsla(34,85%,25%,1); }
-        .breadcrumb li a:hover:after { border-left-color: hsla(34,85%,25%,1) !important; }
+        .breadcrumb li a:hover:after { border-left-color: hsla(34,85%,25%,1); }
 
     #rules ul,ol{
           margin: 1em 0;
