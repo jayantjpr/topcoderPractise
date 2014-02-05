@@ -306,4 +306,8 @@ h1 { font: normal 32px Helvetica, Arial, Sans-Serif; letter-spacing: -1px; margi
         .breadcrumb li a:hover { background: hsla(34,85%,25%,1); }
         .breadcrumb li a:hover:after { border-left-color: hsla(34,85%,25%,1) !important; }
 
+    #rules ul,ol{
+          margin: 1em 0;
+          padding: 0 0 0 40px;
+        }
 /*End of Dashboard 2*/

@@ -61,7 +61,7 @@
                         $compTime = new DateTime($competition -> getStartTime(), $tz);
                         $diff = $compTime -> diff($curtime);
                         if ($diff -> format('%R') == "+")
-                            echo "<a href=\".\competitionpage.php?comp=".$competition->getId()."\">".$competition -> getName()."</a>";
+                            echo "<a href=\"./competitionpage.php?comp=".$competition->getId()."\">".$competition -> getName()."</a>";
                         else
                             echo $competition -> getName();
                 echo "  </td>";
