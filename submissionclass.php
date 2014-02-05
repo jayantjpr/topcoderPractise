@@ -159,8 +159,9 @@ class Submission implements iObject{
   public static function getLeadboardFor($database, $idc){
     //Form Query
     $sub_query = "(SELECT ".self::$tablesFieldList[2].", SUM(score) AS ".self::$tablesFieldList[3].", COUNT(*) AS count".
-      " FROM ".self::$tables[0]." WHERE ".self::$tablesFieldList[0]." = ".$idc." GROUP BY ". self::$tablesFieldList[2].") AS T";
-    $query = Database::formSelectQuery(array_merge(array($sub_query), Registrant::getTablesName()), array(), array(), array())." ORDER BY count, ". self::$tablesFieldList[3]." DESC";
+      " FROM ".self::$tables[0]." WHERE ".self::$tablesFieldList[0]." = ".$idc."AND ".self::$tablesFieldList[3]." > 0".
+      " GROUP BY ". self::$tablesFieldList[2].") AS T";
+    $query = Database::formSelectQuery(array_merge(array($sub_query), Registrant::getTablesName()), array(), array(), array())." ORDER BY count DESC, ". self::$tablesFieldList[3]." DESC";
     //var_dump($query);
 
     //Get Result from database
